@@ -1,0 +1,80 @@
+.countdown-item {
+    background-color: rgba(31, 41, 55, 0.8);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.countdown-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.gift-box {
+    position: relative;
+    background-color: rgba(31, 41, 55, 0.8);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 300px;
+    margin: 0 auto;
+    transition: all 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.gift-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
+}
+
+.gift-icon {
+    color: white;
+    width: 5rem;
+    height: 5rem;
+}
+
+.revealed-gift {
+    background-color: rgba(31, 41, 55, 0.9);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 28rem;
+    margin: 0 auto;
+    animation: revealAnimation 1s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gift-content {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    color: white;
+}
+
+@keyframes revealAnimation {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 640px) {
+    .countdown-item {
+        min-width: 80px;
+        padding: 0.75rem;
+    }
+    
+    .gift-box {
+        max-width: 250px;
+        padding: 1.5rem;
+    }
+}
