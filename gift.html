@@ -192,7 +192,104 @@
                 description: '2025\'te sanatınla dünyayı renklendirmen için özel hazırlanmış sihirli set',
                 color: 'from-pink-500 to-rose-500'
             },
-            // Diğer hediye tipleri...
+            'musician': {
+                header: 'Sevgili Müzisyen',
+                title: '🎵 Müzik Ruhu',
+                gift: 'Sihirli Melodi Kitabı',
+                items: [
+                    '🎶 İlham veren notalar',
+                    '🎤 Sihirli mikrofon',
+                    '🎸 Efsanevi gitar',
+                    '🎧 Müzik ustası sertifikası',
+                    '🎷 Özel albüm fırsatı'
+                ],
+                description: '2025 boyunca müziğinle dünyayı sallaman için özel hazırlanmış sihirli kitap',
+                color: 'from-green-500 to-teal-500'
+            },
+            'writer': {
+                header: 'Sevgili Yazar',
+                title: '✒️ Yazar Ruhu',
+                gift: 'Sihirli Yazım Seti',
+                items: [
+                    '📜 İlham veren defter',
+                    '✏️ Sihirli kalem',
+                    '📚 Yazar ustası sertifikası',
+                    '📖 Özel yayınevi fırsatı',
+                    '📝 Ücretsiz editörlük'
+                ],
+                description: '2025\'te en güzel hikayeleri yazman için özel hazırlanmış sihirli set',
+                color: 'from-yellow-500 to-orange-500'
+            },
+            'traveler': {
+                header: 'Sevgili Gezgin',
+                title: '🗺️ Gezgin Ruhu',
+                gift: 'Sihirli Seyahat Kitabı',
+                items: [
+                    '✈️ Sınırsız uçuş bileti',
+                    '🗺️ İlham veren harita',
+                    '🏝️ Gizli destinasyonlar',
+                    '🎒 Seyahat ustası sertifikası',
+                    '📸 Özel fotoğraf fırsatı'
+                ],
+                description: '2025\'te dünyayı keşfetmen için özel hazırlanmış sihirli seyahat kitabı',
+                color: 'from-cyan-500 to-blue-500'
+            },
+            'tech': {
+                header: 'Sevgili Teknoloji Meraklısı',
+                title: '💻 Teknoloji Ruhu',
+                gift: 'Sihirli Teknoloji Kutusu',
+                items: [
+                    '🤖 Sihirli robot',
+                    '🖥️ En yeni bilgisayar',
+                    '📱 Akıllı telefon',
+                    '🔧 Teknoloji ustası sertifikası',
+                    '🔋 Sınırsız enerji kaynağı'
+                ],
+                description: '2025\'te teknolojinin sınırlarını zorlaman için özel hazırlanmış sihirli kutu',
+                color: 'from-indigo-500 to-purple-500'
+            },
+            'mechanic': {
+                header: 'Sevgili Tamirci',
+                title: '🔧 Tamirci Ruhu',
+                gift: 'Sihirli Alet Kutusu',
+                items: [
+                    '🛠️ Sihirli aletler',
+                    '🔩 Tamir ustası sertifikası',
+                    '🚗 Özel tamir fırsatı',
+                    '🔧 Şirket',
+                    '🔨 Ücretsiz yedek parçalar'
+                ],
+                description: '2025\'te her türlü tamiratı kolayca yapmanızı sağlayacak sihirli alet kutusu',
+                color: 'from-gray-500 to-blue-500'
+            },
+            'civil_aviation': {
+                header: 'Sevgili Sivil Havacı',
+                title: '🛩️ Havacı Ruhu',
+                gift: 'Sihirli Uçuş Kitabı',
+                items: [
+                    '✈️ Sınırsız uçuş bileti',
+                    '🛫 Sihirli uçak',
+                    '🛬 Havacı ustası sertifikası',
+                    '🛩️ Özel uçuş fırsatı',
+                    '🌍 Gizli destinasyonlar'
+                ],
+                description: '2025\'te gökyüzünde özgürce uçman için özel hazırlanmış sihirli uçuş kitabı',
+                color: 'from-blue-500 to-green-500'
+            },
+            'postman': {
+                header: 'Sevgili Postacı',
+                title: '📮 Postacı Ruhu',
+                gift: 'Sihirli Posta Çantası',
+                items: [
+                    '📬 Sihirli mektuplar',
+                    '📦 Posta ustası sertifikası',
+                    '🚚 Özel teslimat fırsatı',
+                    '✉️ Ücretsiz posta hizmeti',
+                    '📮 Gizli posta kutusu'
+                ],
+                description: '2025\'te tüm postaları güvenle ve hızlıca dağıtmanızı sağlayacak sihirli çanta',
+                color: 'from-yellow-500 to-orange-500'
+            }
         };
 
         // Lucide ikonlarını başlat
@@ -314,10 +411,3 @@
         const giftBox = document.getElementById('gift-box');
         giftBox.addEventListener('click', () => {
             giftBox.style.transform = 'scale(0.95) rotate(-5deg)';
-            setTimeout(() => {
-                giftBox.style.transform = 'scale(1) rotate(0)';
-            }, 200);
-        });
-    </script>
-</body>
-</html>
