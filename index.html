@@ -1,266 +1,147 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <!-- Önceki head içeriği aynı -->
-    <style>
-        /* Önceki stiller aynı kalacak */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        
-        .modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+// İlişki türleri ve otomatik notlar
+const RELATIONS = {
+    'best_friend': {
+        title: '👑 En İyi Arkadaş',
+        header: 'Canım Dostum',
+        note: 'Seninle geçirdiğimiz her an çok değerli. 2025\'te dostluğumuz daha da güçlensin! Bu hediyeyi özenle senin için seçtim.',
+        style: 'from-purple-500 to-pink-500'
+    },
+    'close_friend': {
+        title: '💫 Yakın Arkadaş',
+        header: 'Değerli Arkadaşım',
+        note: 'Arkadaşlığımız benim için çok kıymetli. 2025\'in sana tüm güzellikleri getirmesini diliyorum!',
+        style: 'from-blue-500 to-indigo-500'
+    },
+    'work_friend': {
+        title: '💼 İş Arkadaşı',
+        header: 'Sevgili İş Arkadaşım',
+        note: 'Birlikte çalışmaktan keyif aldığım değerli iş arkadaşım. 2025\'te kariyerinde nice başarılara!',
+        style: 'from-green-500 to-teal-500'
+    },
+    'family': {
+        title: '❤️ Aile Üyesi',
+        header: 'Canım Ailem',
+        note: 'Ailemizin değerli üyesi. 2025 senin için sağlık, mutluluk ve başarı getirsin!',
+        style: 'from-red-500 to-pink-500'
+    },
+    'relative': {
+        title: '🌟 Akraba',
+        header: 'Sevgili Akrabam',
+        note: '2025\'in sana ve ailene mutluluk, sağlık ve başarı getirmesini diliyorum.',
+        style: 'from-yellow-500 to-orange-500'
+    },
+    'teacher': {
+        title: '📚 Öğretmenim',
+        header: 'Değerli Öğretmenim',
+        note: 'Bana kattığınız her şey için teşekkür ederim. 2025 size sağlık ve mutluluk getirsin!',
+        style: 'from-cyan-500 to-blue-500'
+    },
+    'student': {
+        title: '🎓 Öğrencim',
+        header: 'Sevgili Öğrencim',
+        note: 'Başarılarınla gurur duyuyorum. 2025\'te tüm hedeflerine ulaşmanı diliyorum!',
+        style: 'from-emerald-500 to-green-500'
+    },
+    'mentor': {
+        title: '🌠 Mentorum',
+        header: 'Değerli Mentorum',
+        note: 'Yol göstericiliğiniz için minnettarım. 2025 size güzellikler getirsin!',
+        style: 'from-violet-500 to-purple-500'
+    },
+    'custom': {
+        title: '✨ Özel',
+        header: 'Özel Not',
+        note: '',
+        style: 'from-gray-500 to-blue-500'
+    }
+};
 
-        .gift-preview {
-            border: 2px dashed rgba(147, 197, 253, 0.3);
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 0.5rem;
-        }
-    </style>
-</head>
-<body class="cyber-bg min-h-screen relative overflow-hidden">
-    <!-- Arkaplan ve başlık aynı -->
-
-    <div class="container mx-auto px-4 py-8 relative z-10">
-        <div class="cyber-box rounded-xl p-6 max-w-4xl mx-auto">
-            <!-- Üst Menü -->
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl text-blue-300">Hediye Oluşturucu</h2>
-                <div class="flex gap-2">
-                    <button onclick="showCustomGiftModal()" 
-                            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
-                        ➕ Yeni Meslek/Hobi Ekle
-                    </button>
-                    <button onclick="showManageGiftsModal()" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                        ⚙️ Hediyeleri Yönet
-                    </button>
-                </div>
-            </div>
-
-            <!-- Ana Form -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Sol Taraf: Temel Bilgiler -->
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-blue-300 mb-2">İsim</label>
-                        <input type="text" id="friendName" placeholder="Örn: Ahmet" 
-                               class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-blue-300 mb-2">Hediye Tipi</label>
-                        <select id="giftType" onchange="updateGiftPreview()"
-                                class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
-                            <!-- JavaScript ile doldurulacak -->
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-blue-300 mb-2">Kişisel Not</label>
-                        <textarea id="personalNote" rows="3" placeholder="Hediyeye eklemek istediğiniz özel not..."
-                                  class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500"></textarea>
-                    </div>
-                </div>
-
-                <!-- Sağ Taraf: Önizleme -->
-                <div>
-                    <div class="cyber-box p-4 h-full">
-                        <h3 class="text-blue-300 mb-4">Hediye Önizleme</h3>
-                        <div id="giftPreview" class="gift-preview text-white">
-                            <!-- JavaScript ile doldurulacak -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Butonlar -->
-            <div class="flex justify-end gap-4 mt-6">
-                <button onclick="generateLink()" 
-                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg">
-                    🎁 Link Oluştur
-                </button>
-            </div>
-
-            <!-- Oluşturulan Link Bölümü -->
-            <div id="linkResult" class="mt-8 hidden">
-                <!-- Önceki link sonuç bölümü -->
-            </div>
-        </div>
+// HTML için ilişki seçici ekleme
+<div class="space-y-6">
+    <div>
+        <label class="block text-blue-300 mb-2">İlişki Türü</label>
+        <select id="relationType" onchange="updateRelationPreview()" 
+                class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
+            <option value="best_friend">👑 En İyi Arkadaş</option>
+            <option value="close_friend">💫 Yakın Arkadaş</option>
+            <option value="work_friend">💼 İş Arkadaşı</option>
+            <option value="family">❤️ Aile Üyesi</option>
+            <option value="relative">🌟 Akraba</option>
+            <option value="teacher">📚 Öğretmenim</option>
+            <option value="student">🎓 Öğrencim</option>
+            <option value="mentor">🌠 Mentorum</option>
+            <option value="custom">✨ Özel İlişki</option>
+        </select>
     </div>
 
-    <!-- Yeni Meslek/Hobi Ekleme Modal -->
-    <div id="customGiftModal" class="modal">
-        <div class="cyber-box rounded-xl p-6 max-w-2xl w-full mx-4">
-            <h3 class="text-2xl text-blue-300 mb-6">Yeni Meslek/Hobi Ekle</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-blue-300 mb-2">Meslek/Hobi Adı</label>
-                    <input type="text" id="newGiftName" placeholder="Örn: Ressam" 
-                           class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
-                </div>
-                
-                <div>
-                    <label class="block text-blue-300 mb-2">Hediye Başlığı</label>
-                    <input type="text" id="newGiftTitle" placeholder="Örn: Sanat Seti" 
-                           class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-blue-300 mb-2">Emoji</label>
-                    <input type="text" id="newGiftEmoji" placeholder="Örn: 🎨" 
-                           class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-blue-300 mb-2">Hediyeler (Her satıra bir hediye)</label>
-                    <textarea id="newGiftItems" rows="5" placeholder="Örn:&#10;🖌️ Sihirli Fırça&#10;🎨 Renk Paleti" 
-                              class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500"></textarea>
-                </div>
-
-                <div class="flex justify-end gap-4 mt-6">
-                    <button onclick="closeCustomGiftModal()" 
-                            class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
-                        İptal
-                    </button>
-                    <button onclick="saveCustomGift()" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                        Kaydet
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div>
+        <label class="block text-blue-300 mb-2">Hitap Şekli</label>
+        <input type="text" id="customHeader" 
+               class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500">
     </div>
 
-    <script>
-        // Tüm hediye tipleri (varsayılan + özel)
-        let giftTypes = {
-            // Varsayılan tipler aynı kalacak
-            'artist': {
-                header: 'Sevgili Sanatçı',
-                title: '🎨 Sanat Ruhu',
-                items: [
-                    '✨ Sınırsız renk paleti',
-                    '🖌️ İlham veren fırçalar',
-                    '🎭 Yaratıcılık beresi',
-                    '🖼️ Sergi fırsatı',
-                    '🌈 Renk ustası sertifikası'
-                ],
-                color: 'from-pink-500 to-rose-500'
-            },
-            // ... diğer varsayılan tipler
-        };
+    <div>
+        <label class="block text-blue-300 mb-2">Kişisel Not</label>
+        <textarea id="personalNote" rows="3" 
+                  class="w-full bg-gray-900 text-white rounded-lg p-3 border border-blue-500"></textarea>
+        <div class="mt-2 flex justify-end">
+            <button onclick="resetNote()" 
+                    class="text-sm text-blue-400 hover:text-blue-300">
+                Varsayılan Nota Dön
+            </button>
+        </div>
+    </div>
+</div>
 
-        // Özel hediye tipleri
-        let customGiftTypes = JSON.parse(localStorage.getItem('customGiftTypes') || '{}');
+// JavaScript fonksiyonları
+function updateRelationPreview() {
+    const type = document.getElementById('relationType').value;
+    const relation = RELATIONS[type];
+    
+    // Hitap şekli ve notu güncelle
+    document.getElementById('customHeader').value = relation.header;
+    document.getElementById('personalNote').value = relation.note;
+    
+    // Stil ve görünümü güncelle
+    updatePreviewStyles(relation.style);
+}
 
-        // Hediye tiplerini güncelle
-        function updateGiftTypes() {
-            giftTypes = { ...giftTypes, ...customGiftTypes };
-            const select = document.getElementById('giftType');
-            select.innerHTML = Object.entries(giftTypes).map(([key, gift]) => 
-                `<option value="${key}">${gift.title}</option>`
-            ).join('');
-            updateGiftPreview();
-        }
+function resetNote() {
+    const type = document.getElementById('relationType').value;
+    const relation = RELATIONS[type];
+    document.getElementById('personalNote').value = relation.note;
+}
 
-        // Yeni hediye tipi ekle
-        function saveCustomGift() {
-            const name = document.getElementById('newGiftName').value;
-            const title = document.getElementById('newGiftTitle').value;
-            const emoji = document.getElementById('newGiftEmoji').value;
-            const items = document.getElementById('newGiftItems').value
-                .split('\n')
-                .filter(item => item.trim());
+function generateCustomLink() {
+    const name = document.getElementById('friendName').value;
+    const type = document.getElementById('giftType').value;
+    const relationType = document.getElementById('relationType').value;
+    const customHeader = document.getElementById('customHeader').value;
+    const note = document.getElementById('personalNote').value;
+    
+    // Link oluşturma
+    const linkParams = new URLSearchParams({
+        type: type,
+        name: name,
+        relation: relationType,
+        header: customHeader,
+        note: note
+    });
+    
+    return `https://evleviyet.github.io/happy-new-year/gift.html?${linkParams.toString()}`;
+}
 
-            if (!name || !title || items.length === 0) {
-                alert('Lütfen tüm alanları doldurun!');
-                return;
-            }
-
-            const key = name.toLowerCase().replace(/\s+/g, '_');
-            customGiftTypes[key] = {
-                header: `Sevgili ${name}`,
-                title: `${emoji} ${title}`,
-                items: items,
-                color: `from-blue-500 to-purple-500`
-            };
-
-            localStorage.setItem('customGiftTypes', JSON.stringify(customGiftTypes));
-            updateGiftTypes();
-            closeCustomGiftModal();
-        }
-
-        // Hediye önizleme
-        function updateGiftPreview() {
-            const type = document.getElementById('giftType').value;
-            const gift = giftTypes[type];
-            const preview = document.getElementById('giftPreview');
-            
-            preview.innerHTML = `
-                <div class="space-y-4">
-                    <h4 class="text-xl font-bold">${gift.title}</h4>
-                    <div class="space-y-2">
-                        ${gift.items.map(item => `
-                            <div class="flex items-center gap-2">
-                                <span>${item}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Modal kontrolü
-        function showCustomGiftModal() {
-            document.getElementById('customGiftModal').classList.add('active');
-        }
-
-        function closeCustomGiftModal() {
-            document.getElementById('customGiftModal').classList.remove('active');
-            // Form temizle
-            document.getElementById('newGiftName').value = '';
-            document.getElementById('newGiftTitle').value = '';
-            document.getElementById('newGiftEmoji').value = '';
-            document.getElementById('newGiftItems').value = '';
-        }
-
-        // Link oluşturma (güncellenmiş versiyon)
-        function generateLink() {
-            const name = document.getElementById('friendName').value;
-            const type = document.getElementById('giftType').value;
-            const note = document.getElementById('personalNote').value;
-            
-            if (!name) {
-                alert('Lütfen bir isim girin!');
-                return;
-            }
-
-            const link = `https://evleviyet.github.io/happy-new-year/gift.html?type=${type}&name=${encodeURIComponent(name)}&note=${encodeURIComponent(note)}`;
-            
-            // Link gösterme ve kaydetme işlemleri...
-            // (önceki kod aynı kalacak)
-        }
-
-        // Sayfa yüklendiğinde
-        window.onload = function() {
-            updateGiftTypes();
-        };
-    </script>
-</body>
-</html>
+// Kaydetme ve yükleme fonksiyonları
+function saveCustomRelation() {
+    const header = document.getElementById('customHeader').value;
+    const note = document.getElementById('personalNote').value;
+    
+    const customRelations = JSON.parse(localStorage.getItem('customRelations') || '{}');
+    customRelations[header] = {
+        header: header,
+        note: note,
+        style: 'from-blue-500 to-purple-500'
+    };
+    
+    localStorage.setItem('customRelations', JSON.stringify(customRelations));
+}
