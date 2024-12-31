@@ -1,3 +1,40 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #0f172a;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #8b5cf6;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(147, 197, 253, 0.8), 0 0 15px rgba(147, 197, 253, 0.8);
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: #9ca3af;
+}
+
+.countdown {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
 .countdown-item {
     background-color: rgba(31, 41, 55, 0.8);
     border-radius: 0.5rem;
@@ -6,11 +43,25 @@
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .countdown-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.countdown-item span {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #8b5cf6;
+}
+
+.countdown-item small {
+    display: block;
+    font-size: 1rem;
+    color: #9ca3af;
 }
 
 .gift-box {
@@ -23,6 +74,7 @@
     transition: all 0.5s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
+    text-align: center;
 }
 
 .gift-box:hover {
@@ -34,6 +86,7 @@
     color: white;
     width: 5rem;
     height: 5rem;
+    margin-bottom: 1rem;
 }
 
 .revealed-gift {
@@ -44,11 +97,24 @@
     margin: 0 auto;
     animation: revealAnimation 1s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .gift-content {
     background: linear-gradient(to right, #3b82f6, #8b5cf6);
     color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+
+.gift-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.gift-content p {
+    font-size: 1.2rem;
 }
 
 @keyframes revealAnimation {
@@ -68,6 +134,11 @@
 
 /* Mobil Uyumluluk */
 @media (max-width: 640px) {
+    .countdown {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .countdown-item {
         min-width: 80px;
         padding: 0.75rem;
@@ -76,5 +147,21 @@
     .gift-box {
         max-width: 250px;
         padding: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+
+    .gift-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .gift-content p {
+        font-size: 1rem;
     }
 }
