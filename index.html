@@ -1,79 +1,208 @@
 <!DOCTYPE html>
 <html lang="tr">
-<!-- Head kısmı aynı -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Yeni Yıl Hediyesi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .countdown-item {
+            background-color: rgba(31, 41, 55, 0.8);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            min-width: 100px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gift-box {
+            position: relative;
+            background-color: rgba(31, 41, 55, 0.8);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 300px;
+            margin: 0 auto;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .gift-icon {
+            color: white;
+            width: 5rem;
+            height: 5rem;
+        }
+
+        .revealed-gift {
+            background-color: rgba(31, 41, 55, 0.9);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 28rem;
+            margin: 0 auto;
+            animation: revealAnimation 1s ease;
+        }
+
+        @keyframes revealAnimation {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
 <body class="bg-gradient-to-br from-gray-900 to-black min-h-screen">
-    <!-- Link oluşturucu form -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="bg-gray-800 rounded-lg p-6 mb-8 max-w-md mx-auto">
-            <h3 class="text-white text-xl mb-4">Hediye Linki Oluştur</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-gray-300 mb-2">Arkadaşın İsmi:</label>
-                    <input type="text" id="friendName" class="w-full bg-gray-700 text-white rounded p-2 border border-gray-600">
+    <div id="app" class="container mx-auto px-4 py-8">
+        <div class="gift-container text-center">
+            <!-- Kişiselleştirilmiş başlık -->
+            <h2 id="personalHeader" class="text-3xl font-medium text-white mb-6 italic">
+                <!-- JavaScript ile doldurulacak -->
+            </h2>
+            
+            <h1 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 mb-8">
+                2025
+            </h1>
+            
+            <div id="countdown" class="flex justify-center gap-4 mb-12">
+                <div class="countdown-item">
+                    <div id="hours" class="text-4xl font-bold text-white">00</div>
+                    <div class="text-sm text-gray-400">Saat</div>
                 </div>
-                <div>
-                    <label class="block text-gray-300 mb-2">Hediye Tipi:</label>
-                    <select id="giftType" class="w-full bg-gray-700 text-white rounded p-2 border border-gray-600">
-                        <option value="friend1">Sanat Temalı Hediye</option>
-                        <option value="friend2">Müzik Temalı Hediye</option>
-                        <option value="friend3">Gezgin Temalı Hediye</option>
-                        <option value="friend4">Teknoloji Temalı Hediye</option>
-                        <option value="friend5">Spor Temalı Hediye</option>
-                    </select>
+                <div class="countdown-item">
+                    <div id="minutes" class="text-4xl font-bold text-white">00</div>
+                    <div class="text-sm text-gray-400">Dakika</div>
                 </div>
-                <div>
-                    <label class="block text-gray-300 mb-2">Oluşturulan Link:</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="generatedLink" readonly class="w-full bg-gray-700 text-white rounded p-2 border border-gray-600">
-                        <button onclick="copyLink()" class="bg-blue-600 text-white px-4 rounded hover:bg-blue-700">
-                            Kopyala
-                        </button>
-                    </div>
+                <div class="countdown-item">
+                    <div id="seconds" class="text-4xl font-bold text-white">00</div>
+                    <div class="text-sm text-gray-400">Saniye</div>
                 </div>
-                <div>
-                    <button onclick="testLink()" class="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">
-                        Test Et
-                    </button>
+            </div>
+
+            <div id="gift-box" class="gift-box">
+                <i class="gift-icon" data-lucide="gift"></i>
+            </div>
+
+            <div id="revealed-gift" class="revealed-gift hidden">
+                <h2 class="text-3xl font-bold text-white mb-6">Mutlu Yıllar! 🎉</h2>
+                <div class="gift-content p-6 rounded-lg">
+                    <div class="text-2xl font-bold mb-4"></div>
+                    <p class="text-lg opacity-90"></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Mevcut hediye gösterim alanı -->
-    <div id="app" class="container mx-auto px-4 py-8">
-        <!-- Mevcut içerik aynen kalıyor -->
-    </div>
-
     <script>
-        // Mevcut script kodları aynen kalıyor
-        
-        // Link oluşturucu fonksiyonlar
-        function updateLink() {
-            const name = document.getElementById('friendName').value;
-            const type = document.getElementById('giftType').value;
-            const baseUrl = window.location.href.split('?')[0];
-            const link = `${baseUrl}?type=${type}&name=${encodeURIComponent(name)}`;
-            document.getElementById('generatedLink').value = link;
+        const GIFTS = {
+            'default': {
+                header: 'Hoş Geldin!',
+                title: 'Özel Yeni Yıl Hediyesi',
+                gift: 'Sihirli Dilek Kutusu',
+                description: '2025 yılında tüm dileklerinizin gerçekleşmesi için özel hazırlanmış sihirli kutu',
+                color: 'from-blue-500 to-purple-500'
+            },
+            'friend1': {
+                header: 'Sevgili',
+                title: 'Sanat Tutkunu',
+                gift: 'Sınırsız İlham Paleti',
+                description: '2025 boyunca sanatsal yaratıcılığınızı zirveye taşıyacak sihirli palet',
+                color: 'from-pink-500 to-rose-500'
+            },
+            'friend2': {
+                header: 'Canım',
+                title: 'Müzik Sever',
+                gift: 'Harmonik Başarı Notaları',
+                description: 'Yeni yılda müzikle dolu başarılı anlar yaşamanız için özel beste',
+                color: 'from-green-500 to-teal-500'
+            },
+            'friend3': {
+                header: 'Değerli Dostum',
+                title: 'Gezgin Ruhu',
+                gift: 'Dünya Gezgini Pusulası',
+                description: '2025\'te seni en güzel maceralara götürecek sihirli pusula',
+                color: 'from-yellow-500 to-orange-500'
+            }
+        };
+
+        lucide.createIcons();
+
+        // URL'den parametreleri al
+        const urlParams = new URLSearchParams(window.location.search);
+        const giftType = urlParams.get('type') || 'default';
+        const friendName = urlParams.get('name') || '';
+        const currentGift = GIFTS[giftType] || GIFTS.default;
+
+        // Kişiselleştirilmiş başlığı ayarla
+        const headerText = friendName ? `${currentGift.header} ${friendName}!` : currentGift.header;
+        document.getElementById('personalHeader').textContent = headerText;
+
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            const diff = midnight - now;
+
+            if (diff > 0) {
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                revealGift();
+            }
         }
 
-        function copyLink() {
-            const linkInput = document.getElementById('generatedLink');
-            linkInput.select();
-            document.execCommand('copy');
-            alert('Link kopyalandı!');
+        function revealGift() {
+            document.getElementById('countdown').style.display = 'none';
+            document.getElementById('gift-box').style.display = 'none';
+            
+            const revealedGift = document.getElementById('revealed-gift');
+            revealedGift.classList.remove('hidden');
+            
+            const giftTitle = revealedGift.querySelector('.gift-content .text-2xl');
+            const giftDesc = revealedGift.querySelector('.gift-content p');
+            
+            giftTitle.textContent = currentGift.gift;
+            giftDesc.textContent = currentGift.description;
+            
+            const giftContent = revealedGift.querySelector('.gift-content');
+            giftContent.className = `gift-content p-6 rounded-lg bg-gradient-to-r ${currentGift.color}`;
         }
 
-        function testLink() {
-            const link = document.getElementById('generatedLink').value;
-            window.open(link + '&test=true', '_blank');
+        // Test modu için
+        const testMode = urlParams.get('test') === 'true';
+        if (testMode) {
+            setTimeout(revealGift, 3000);
+        } else {
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
         }
 
-        // Form değişikliklerini dinle
-        document.getElementById('friendName').addEventListener('input', updateLink);
-        document.getElementById('giftType').addEventListener('change', updateLink);
-
-        // Sayfa yüklendiğinde ilk linki oluştur
-        updateLink();
+        // Hediye kutusu tıklama animasyonu
+        const giftBox = document.getElementById('gift-box');
+        giftBox.addEventListener('click', () => {
+            giftBox.style.transform = 'scale(0.95) rotate(-2deg)';
+            setTimeout(() => {
+                giftBox.style.transform = 'scale(1) rotate(0)';
+            }, 200);
+        });
     </script>
 </body>
 </html>
