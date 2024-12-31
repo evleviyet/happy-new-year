@@ -114,7 +114,6 @@
     </div>
 
     <script>
-        // Kaydedilen linkleri yerel depolamadan al
         let savedLinks = JSON.parse(localStorage.getItem('giftLinks') || '[]');
 
         function generateLink() {
@@ -126,8 +125,8 @@
                 return;
             }
 
-            const baseUrl = window.location.href;
-            const link = `${baseUrl}gift.html?type=${type}&name=${encodeURIComponent(name)}`;
+            // Düzeltilmiş URL yapısı
+            const link = `https://evleviyet.github.io/happy-new-year/gift.html?type=${type}&name=${encodeURIComponent(name)}`;
             
             // Linki göster
             document.getElementById('generatedLink').value = link;
@@ -213,7 +212,6 @@
             `;
         }
 
-        // Sayfa yüklendiğinde linkleri göster
         updateSavedLinks();
     </script>
 </body>
